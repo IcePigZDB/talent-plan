@@ -24,7 +24,7 @@ func (s *joinTestSuite) TestJoin(c *check.C) {
 	}{
 		// r0 join r0 on r0.col0 = r0.col1
 		{"./t/r0.tbl", "./t/r0.tbl", []int{0}, []int{1}, 0x16CBF2D},
-		// r0 join r1 on r0.col0 = r1.col0
+		// // r0 join r1 on r0.col0 = r1.col0
 		{"./t/r0.tbl", "./t/r1.tbl", []int{0}, []int{0}, 0xC1D73B},
 		// r0 join r1 on r0.col1 = r1.col1
 		{"./t/r0.tbl", "./t/r1.tbl", []int{1}, []int{1}, 0x33010},

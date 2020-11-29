@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/csv"
+	"fmt"
 	"io"
 	"join/mvmap"
 	"os"
@@ -18,16 +19,19 @@ func JoinExample(f0, f1 string, offset0, offset1 []int) (sum uint64) {
 	for _, row := range tbl1 {
 		rowIDs := probe(hashtable, row, offset1)
 		for _, id := range rowIDs {
+			// ParseUnit parse str to uint base=10,bitsize 64
 			v, err := strconv.ParseUint(tbl0[id][0], 10, 64)
 			if err != nil {
 				panic("JoinExample panic\n" + err.Error())
 			}
+			// cal sum
 			sum += v
 		}
 	}
 	return sum
 }
 
+// readCSVFileIntoTbl read csv file into tbl
 func readCSVFileIntoTbl(f string) (tbl [][]string) {
 	csvFile, err := os.Open(f)
 	if err != nil {
@@ -82,4 +86,16 @@ func probe(hashtable *mvmap.MVMap, row []string, offset []int) (rowIDs []int64) 
 		rowIDs = append(rowIDs, *(*int64)(unsafe.Pointer(&val[0])))
 	}
 	return rowIDs
+}
+
+// gen correct anser here
+func main() {
+	// bigger table
+	fmt.Printf("%X \n", JoinExample("./t/r0.tbl", "./t/r0.tbl", []int{0}, []int{1}))       // 767636031
+	fmt.Printf("%X \n", JoinExample("./t/r0.tbl", "./t/r1.tbl", []int{0}, []int{0}))       // 49082128576
+	fmt.Printf("%X \n", JoinExample("./t/r0.tbl", "./t/r1.tbl", []int{1}, []int{1}))       // 85306117839070
+	fmt.Printf("%X \n", JoinExample("./t/r0.tbl", "./t/r2.tbl", []int{0}, []int{0}))       // 48860100254
+	fmt.Printf("%X \n", JoinExample("./t/r0.tbl", "./t/r1.tbl", []int{0, 1}, []int{0, 1})) //5552101
+	fmt.Printf("%X \n", JoinExample("./t/r1.tbl", "./t/r2.tbl", []int{0}, []int{0}))       // 6331038719880
+	fmt.Printf("%X \n", JoinExample("./t/r2.tbl", "./t/r2.tbl", []int{0, 1}, []int{0, 1})) // 42056985375886
 }
