@@ -3,14 +3,15 @@ package main
 import (
 	"encoding/csv"
 	"io"
+	"join/mvmap"
 	"os"
 	"strconv"
 	"unsafe"
-
-	"github.com/pingcap/tidb/util/mvmap"
+	// "github.com/pingcap/tidb/util/mvmap"
 )
 
 // JoinExample performs a simple hash join algorithm.
+// tbl0 build tbl1 probe
 func JoinExample(f0, f1 string, offset0, offset1 []int) (sum uint64) {
 	tbl0, tbl1 := readCSVFileIntoTbl(f0), readCSVFileIntoTbl(f1)
 	hashtable := buildHashTable(tbl0, offset0)
@@ -58,8 +59,10 @@ func buildHashTable(data [][]string, offset []int) (hashtable *mvmap.MVMap) {
 			}
 			keyBuffer = append(keyBuffer, []byte(row[off])...)
 		}
+		// value:rowID
 		*(*int64)(unsafe.Pointer(&valBuffer[0])) = int64(i)
 		hashtable.Put(keyBuffer, valBuffer)
+		// empty keyBuffer
 		keyBuffer = keyBuffer[:0]
 	}
 	return
