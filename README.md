@@ -1,7 +1,9 @@
+> Finish in [2020 Fall CDDSCLab Training Plan](https://github.com/CDDSCLab/training-plan): Merge Sort, Map Reduce and Parallel Join, see [talent-plan/tidb/](https://github.com/IcePigZDB/talent-plan/tree/master/tidb).
+
+---------------------------------------------------------------------
 # Welcome to learn Talent Plan Courses!
 
 ![Talent Plan Logo](media/talent-plan-logo.png)
-
 Talent Plan is an open source training program initiated by PingCAP. It aims to create or combine some open source learning materials for people interested in open source, distributed systems, Rust, Golang, and other infrastructure knowledges. As such, a series of courses focused on open source collaboration, rust programming, distributed database and systems are provided.
 
 > Note:
